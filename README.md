@@ -1,3 +1,6 @@
+![](sr/Final_Config.png)
+> Figure1) First configuration of the robot and environment
+
 Python Robotics Simulator
 ================================
 
