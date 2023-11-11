@@ -3,7 +3,6 @@ Research_Track1_Assignment1
 It's the first assignment that the Robot grabs all the markers and put'em all in the same place next to eachother. I also attached the necessary files and images of the Robot, markers and the whole environment.
 
 ![Start_Config](https://github.com/ALFA-PM/ResearchTrack1_Assignment1/assets/147394202/d95b9587-838d-434f-867a-386bb79ef0ac)
-![](sr/Start_Config.png)
 > Figure1) The starter place configuration of the Robot and environment
 
 ![](sr/Final_Config.png)
