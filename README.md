@@ -1,5 +1,5 @@
 Research_Track1_Assignment1
-
+------------------------------------------------
 It's the first assignment that the Robot grabs all the markers and put'em all in the same place next to eachother. I also attached the necessary files and images of the Robot, markers and the whole environment.
 
 ![](sr/Start_Config.png)
@@ -12,7 +12,7 @@ It's the first assignment that the Robot grabs all the markers and put'em all in
 > Figure3) The flowchart
 
 Running
-
+------------------------------------
 Python Robotics Simulator
 ================================
 
