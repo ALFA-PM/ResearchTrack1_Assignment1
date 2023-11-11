@@ -8,7 +8,7 @@ It's the first assignment of the Research track1 that the Robot grabs all the ma
 ![](sr/Final_Config.png)
 > Figure2) Final configuration of the Robot and markers
 
-![](sr/Flow.drawio.png)
+![Flow drawio](https://github.com/ALFA-PM/ResearchTrack1_Assignment1/assets/147394202/3916cf06-47f3-4464-b96b-4ec0f5b17c4e)
 > Figure3) The flowchart
 
 Python Robotics Simulator
