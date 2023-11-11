@@ -117,7 +117,7 @@ release_find_token()
 grabbing()
 Release_Grabbed_Gold()
 
-###drive###
+### drive ###
 Function for setting a linear velocity
 Speed: the speed of the wheels
 Seconds: the time interval
@@ -130,7 +130,7 @@ def drive(speed, seconds):
     R.motors[0].m0.power = 0
     R.motors[0].m1.power = 0
 ```
-###turn###
+### turn ###
 Function for setting an angular velocity
 ```python
 def turn(speed, seconds):
@@ -140,7 +140,7 @@ def turn(speed, seconds):
     R.motors[0].m0.power = 0
     R.motors[0].m1.power = 0
 ```
-###def find_gold_token###
+### def find_gold_token ###
 Function to find the closest token
 ```python
 def find_gold_token():
@@ -158,7 +158,7 @@ def find_gold_token():
 	else:
 		return dist, rot_y ,Code
 ```
-###release_find_token###
+### release_find_token ###
 ```python
 def release_find_token():
 
@@ -180,7 +180,7 @@ def release_find_token():
 	else:
 		return dist, rot_y ,Code
 ```
-###grabbing###
+### grabbing ###
 ```python
 def grabbing():
 
@@ -202,7 +202,7 @@ def grabbing():
 		print("Waiting...")
 		turn(20, 1)
 ```
-###Release_Grabbed_Gold###
+### Release_Grabbed_Gold ###
 ```python
 def Release_Grabbed_Gold():
 
