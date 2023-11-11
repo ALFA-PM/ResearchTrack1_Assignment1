@@ -222,7 +222,7 @@ def Release_Grabbed_Gold():
 		print("Waiting...")
 		turn(20, 1)
 ```
-###main###
+### main ###
 Now with all these described functions, let's describe the main code that make the Robot grabs and places all the markers together. If robot could't find any markers then it turns around to find anyone. The Robot tries to grab and put the first marker in the described location and list that marker as it read and looks for any new markers to hold and put next to previous one.
 ```python
 dist, rot_y, code= find_gold_token() # the robot is tring to find the closest marker
