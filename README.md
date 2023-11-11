@@ -1,6 +1,6 @@
 Research_Track1_Assignment1
 ------------------------------------------------
-It's the first assignment that the Robot grabs all the markers and put'em all in the same place next to eachother. I also attached the necessary files and images of the Robot, markers and the whole environment.
+It's the first assignment of the Research track1 that the Robot grabs all the markers and put'em all in the same place next to eachother. I also attached the necessary files and images of the Robot, markers and the whole environment.
 
 ![Start_Config](https://github.com/ALFA-PM/ResearchTrack1_Assignment1/assets/147394202/d95b9587-838d-434f-867a-386bb79ef0ac)
 > Figure1) The starter place configuration of the Robot and environment
@@ -239,10 +239,10 @@ R.release()
 print("Done")
 turn(20,4)
 	
-# the robot lists the marker's code, searching for the other markers to add
 GrabbedGold.append(code)
-	
-# the robot do these orders, till puts every markers together
+```
+Now with `GrabbedGold.append(code)` the robot lists the marker's code, and it keeps searching for the other markers to add. The robot do these orders, till puts all markers together.
+```python
 while len(GrabbedGold):		
 # the robot moves toward the released marker and grabs'em
 	dist, rot_y, code = find_gold_token()
@@ -255,8 +255,9 @@ while len(GrabbedGold):
 	print("Yeah, I did it!")		
 	# the robot moves toward the defined dropping location with the grabbed marker
 	dist1, rot1_y, code1 = release_find_token()
-		
-	# for the first round of the loop the robot brings the markers to the reference marker
+```	
+For the first round of the loop the robot brings the markers to the reference marker.
+```python
 	while dist1 == -1:
 		print("Confusing!!!")
 		turn(20,2)
@@ -270,4 +271,5 @@ while len(GrabbedGold):
 	# the robot lists the marker's code, searching for the other markers to add
 	GrabbedGold.append(code)
 ```
+
 [sr-api]: https://studentrobotics.org/docs/programming/sr/
