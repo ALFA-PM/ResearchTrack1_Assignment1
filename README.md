@@ -242,6 +242,7 @@ turn(20,4)
 GrabbedGold.append(code)
 ```
 Now with `GrabbedGold.append(code)` the robot lists the marker's code, and it keeps searching for the other markers to add. The robot do these orders, till puts all markers together.
+
 ```python
 while len(GrabbedGold):		
 # the robot moves toward the released marker and grabs'em
@@ -257,6 +258,7 @@ while len(GrabbedGold):
 	dist1, rot1_y, code1 = release_find_token()
 ```	
 For the first round of the loop the robot brings the markers to the reference marker.
+
 ```python
 	while dist1 == -1:
 		print("Confusing!!!")
