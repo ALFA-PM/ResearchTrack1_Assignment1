@@ -11,8 +11,6 @@ It's the first assignment that the Robot grabs all the markers and put'em all in
 ![](sr/Flowchart.png)
 > Figure3) The flowchart
 
-Running
-------------------------------------
 Python Robotics Simulator
 ================================
 
@@ -39,20 +37,10 @@ On Ubuntu, this can be accomplished by:
 -----------------------------
 
 To run one or more scripts in the simulator, use `run.py`, passing it the file names. 
-
-I am proposing you three exercises, with an increasing level of difficulty.
-The instruction for the three exercises can be found inside the .py files (exercise1.py, exercise2.py, exercise3.py).
-
-When done, you can run the program with:
+You can run the program with:
 
 ```bash
-$ python run.py exercise1.py
-```
-
-You have also the solutions of the exercises (folder solutions)
-
-```bash
-$ python run.py solutions/exercise1_solution.py
+$ python2 run.py assignment.py
 ```
 
 Robot API
@@ -116,5 +104,170 @@ for m in markers:
     elif m.info.marker_type == MARKER_ARENA:
         print " - Arena marker {0} is {1} metres away".format( m.info.offset, m.dist )
 ```
+Coding
+----------------------
+The Robot should grab all the markers and put'm all together. To do this, I defined some functions below:
+a_th: Threshold for the control of the orientation
+d_th: Threshold for the control of the linear distance
+GrabbedGold: I list this so the Robot ignores to grab the old markers and searching for the new markers as well
+drive: Robot driving
+turn: turning the Robot
+find_gold_token: finding for the closest token
+release_find_token()
+grabbing()
+Release_Grabbed_Gold()
 
+###drive###
+Function for setting a linear velocity
+Speed: the speed of the wheels
+Seconds: the time interval
+```python
+def drive(speed, seconds):
+
+    R.motors[0].m0.power = speed
+    R.motors[0].m1.power = speed
+    time.sleep(seconds)
+    R.motors[0].m0.power = 0
+    R.motors[0].m1.power = 0
+```
+###turn###
+Function for setting an angular velocity
+```python
+def turn(speed, seconds):
+
+    R.motors[0].m1.power = -speed
+    time.sleep(seconds)
+    R.motors[0].m0.power = 0
+    R.motors[0].m1.power = 0
+```
+###def find_gold_token###
+Function to find the closest token
+```python
+def find_gold_token():
+
+	dist = 100
+	for token in R.see():
+		if token.dist<dist and token.info.marker_type == MARKER_TOKEN_GOLD and token.info.code not in GrabbedGold:   
+			dist = token.dist
+			rot_y = token.rot_y
+			Code = token.info.code	
+	if dist == 100:
+	
+		return -1 , -1 ,-1
+	
+	else:
+		return dist, rot_y ,Code
+```
+###release_find_token###
+```python
+def release_find_token():
+
+	dist =100
+	
+	
+	for token in R.see():
+	
+		if token.dist<dist and token.info.marker_type == MARKER_TOKEN_GOLD and token.info.code in GrabbedGold:
+		
+			dist = token.dist
+			rot_y = token.rot_y
+			Code = token.info.code
+			
+	if dist == 100:
+	
+		return -1 , -1 ,-1
+	
+	else:
+		return dist, rot_y ,Code
+```
+###grabbing###
+```python
+def grabbing():
+
+	while True:
+	
+	    dist, rot_y ,Code= find_gold_token()  # we look for markers
+	    
+	    if dist <= d_th: # if we are close to the token, we grab it
+		print("Aha, Found it!")	 
+		
+		break
+	    elif -a_th<= rot_y <= a_th: # if the robot is well aligned with the token, we go forward
+		print("I'm getting closer!")
+		drive(20, 1)
+	    elif rot_y < -a_th: # if the robot is not well aligned with the token, we move it on the left or on the right
+		print("I'm on my way")
+		turn(-2, 0.5)
+	    elif rot_y > a_th:
+		print("Waiting...")
+		turn(20, 1)
+```
+###Release_Grabbed_Gold###
+```python
+def Release_Grabbed_Gold():
+
+	while True:
+	    dist, rot_y ,Code= release_find_token()  # we look for any dropped markers
+	    
+	    if dist <d_th + 0.1:  # if we are close to the dropping token location, the robot can release the last marker/0.1 is the distance between the placed marker
+		
+		break
+	    elif -a_th<= rot_y <= a_th: # if the robot is well aligned with the dropping location, we go forward
+		print("I'm getting closer!")
+		drive(20, 1)
+	    elif rot_y < -a_th: # if the robot is not well aligned with the dropping location, we move it on the left or on the right
+		print("I'm on my way")
+		turn(-2, 0.5)
+	    elif rot_y > a_th:
+		print("Waiting...")
+		turn(20, 1)
+```
+###main###
+Now with all these described functions, let's describe the main code that make the Robot grabs and places all the markers together. If robot could't find any markers then it turns around to find anyone. The Robot tries to grab and put the first marker in the described location and list that marker as it read and looks for any new markers to hold and put next to previous one.
+```python
+dist, rot_y, code= find_gold_token() # the robot is tring to find the closest marker
+while dist == -1:  # if the robot can't find any markers, searching until finds'em all
+	print("Searching...")
+	turn(20,2)
+	dist, rot_y, code = find_gold_token() # the robot moves toward the released marker and grabs'em
+grabbing()  
+R.grab()
+print("Yeah, I did it!") # the robot moves toward the defined dropping location
+turn(-20,1)
+drive(20 , 9)
+R.release()
+print("Done")
+turn(20,4)
+	
+# the robot lists the marker's code, searching for the other markers to add
+GrabbedGold.append(code)
+	
+# the robot do these orders, till puts every markers together
+while len(GrabbedGold):		
+# the robot moves toward the released marker and grabs'em
+	dist, rot_y, code = find_gold_token()
+	while dist == -1:
+		print("Searching...")
+		turn(20,2)
+		dist ,rot_y, code = find_gold_token()
+	grabbing()
+	R.grab()
+	print("Yeah, I did it!")		
+	# the robot moves toward the defined dropping location with the grabbed marker
+	dist1, rot1_y, code1 = release_find_token()
+		
+	# for the first round of the loop the robot brings the markers to the reference marker
+	while dist1 == -1:
+		print("Confusing!!!")
+		turn(20,2)
+		dist1, rot1_y, code1 = release_find_token()
+	Release_Grabbed_Gold()
+	R.release()
+	print("Well, done. Hoorayyyyyyyyyyyyy") # the robot keeps turning
+	drive(-20,2)
+	turn(20,2)
+		
+	# the robot lists the marker's code, searching for the other markers to add
+	GrabbedGold.append(code)
+```
 [sr-api]: https://studentrobotics.org/docs/programming/sr/
