@@ -209,8 +209,11 @@ def Release_Grabbed_Gold():
 	while True:
 	    dist, rot_y ,Code= release_find_token()  # we look for any dropped markers
 	    
-	    if dist <d_th + 0.1:  # if we are close to the dropping token location, the robot can release the last marker/0.1 is the distance between the placed marker
-		
+	    if dist <d_th + 0.1:  # if we are close to the dropping token location, the robot can release the last marker/0.1 is the distance between the placed markers
+```
+Why `+ 0.1` ? To place all the markers next to each other more closely and without any further space.
+
+```python
 		break
 	    elif -a_th<= rot_y <= a_th: # if the robot is well aligned with the dropping location, we go forward
 		print("I'm getting closer!")
